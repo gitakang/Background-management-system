@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <title>职位管理</title>
+</head>
+<body>
+    <!-- 加载头部 -->
+    <div class="header container"></div>
+    <!-- 内容标题 -->
+    <div class="container con-warp">
+        <div class="collapse navbar-collapse" id="position-nav">
+            <div class="nav navbar-nav active">职位管理</div>
+          <div class="nav navbar-nav navbar-right">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">添加</button>
+          </div>
+        </div>
+    </div>
+    <!-- 表格栏 -->
+    <div class="container" style="margin-top:30px;">
+        <table class="table table-bordered table-hover pos_tab">
+            <thead> 
+                <tr>
+                    <td class="">序号</td>
+                    <td class="">公司logo</td>
+                    <td class="">公司名称</td>
+                    <td class="">职位名称</td>
+                    <td class="">工作经验</td>
+                    <td class="">职位类型</td>
+                    <td class="">工作地点</td>
+                    <td class="">职位薪资</td>
+                    <td class="">操作</td>
+                </tr>
+            </thead>
+            <tbody class="pos_list">
+            </tbody>     
+        </table>
+    </div>
+   
+    <nav aria-label="Page navigation" style="float:right; margin-right:70px;">
+      <ul class="pagination">
+      </ul>
+    </nav>
+
+    <script type="text/html" id="position_list_temp">
+        {{each list prod index}}
+            <tr>
+                <td>{{index + 1}}</td>
+                <td><img src="{{prod.logoname}}" style="height:50px;"></td>
+                <td>{{prod.companyname}}</td>
+                <td>{{prod.positionname}}</td>
+                <td>{{prod.work}}</td>
+                <td>{{prod.typeposition}}</td>
+                <td>{{prod.address}}</td>
+                <td>{{prod.money}}</td>
+                <td><a href="#" data-toggle="modal" data-target="#modModal" class="mod_pos_list" data-id="{{prod._id}}">修改</a> 
+                    <a href="#" data-toggle="modal" data-target="#delModal" class="del_pos_list" data-id="{{prod._id}}">删除</a>
+                </td>
+            </tr>
+        {{/each}}
+    </script>
+    <!-- 删除确定模态框 -->
+    <div class="modal fade" id="delModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">请确认信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">您确认删除信息吗？</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary confirm" data-id="">确认</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/lib/jquery/jquery-1.12.4.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/lib/artTemplate/template-web.js"></script>
+    <script src="/js/common/registerModal.js"></script>
+    <script src="/js/common/loginModal.js"></script>
+    <script src="/js/common/addModal.js"></script>
+    <script src="/js/common/modefly.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/position/position.js"></script>
+</body>
+</html>
