@@ -25,7 +25,7 @@ Header.template = `<nav class="navbar navbar-inverse">
                       </ul>
                       <ul class="nav navbar-nav navbar-right">
                         <li data-toggle="modal" data-target="#logModal"><a href="#">登录</a></li>
-                        <li data-toggle="modal" data-target="#regModal"><a href="#">注册</a></li>
+                        <li class="reg_btn_reset" data-toggle="modal" data-target="#regModal"><a href="#">注册</a></li>
                       </ul>
                       <ul class="nav navbar-nav navbar-right hide login_success">
                         <li><a href="#">欢迎您：</a></li>
@@ -47,11 +47,16 @@ $.extend(Header.prototype,{
     },
     addListener : function () {
       $(".logout_link").on("click",this.handleLogout);
+      $(".reg_btn_reset").on("click",this.resetForm)
     },
     handleLogout:function(){
       $.get("/api/users/logout",function(){
         location.reload();
       });
+    },
+    resetForm:function(){
+      $(".reg_form").get(0).reset();
+      $("#regModal .clear").addClass("hide");
     },
     checkLogin:function(){
       $.get("/api/users/check",function(data){

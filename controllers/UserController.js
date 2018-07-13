@@ -31,6 +31,23 @@ var UserController = {
             });
         });
     },
+    //检测用户名是否存在
+    checkUsername:function(req,res,next){
+        const {username} = req.query;
+        UserModel.checkUsername({username},(data)=>{
+            res.json({
+                res_code : 0,
+                res_error:"",
+                res_body: data
+            })
+        },(err)=>{
+            res.json({
+                res_code : -1,
+                res_error:err,
+                res_body:{}
+            })
+        });
+    },
     //用户注册方法
     register:function(req,res,next){
         //获取post

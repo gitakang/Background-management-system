@@ -29,6 +29,9 @@ const UserModel = {
 			success(userinfo);
 		});
 	},
+	checkUsername:function(username,success,error){
+		User.find(username).then(success,error);
+	},
 	// 查询用户信息
 	find : function(userinfo,success,error) {
 		User.find(userinfo).then(success,error);
