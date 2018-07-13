@@ -72,13 +72,6 @@ $.extend(Position.prototype,{
 				});
 		});
 	},
-	// deleteFile:function(name){   
-    //   let fso=new ActiveXObject("Scripting.FileSystemObject");   
-	// 		if(fso.FileExists(name))   
-	// 		fso.DeleteFile(name);   
-	// 		else   
-	// 		return   false;   
-  	// },
 	//添加的模态框实现功能
 	handleAddPosition:function(){
 		var formDate = new FormData($(".add_pos_form").get(0));
