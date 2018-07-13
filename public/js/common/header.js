@@ -24,7 +24,7 @@ Header.template = `<nav class="navbar navbar-inverse">
                         <li class="pos_center"><a href="#">职位管理</a></li>
                       </ul>
                       <ul class="nav navbar-nav navbar-right">
-                        <li data-toggle="modal" data-target="#logModal"><a href="#">登录</a></li>
+                        <li class="btn_login_modal" data-toggle="modal" data-target="#logModal"><a href="#">登录</a></li>
                         <li class="reg_btn_reset" data-toggle="modal" data-target="#regModal"><a href="#">注册</a></li>
                       </ul>
                       <ul class="nav navbar-nav navbar-right hide login_success">
@@ -45,9 +45,16 @@ $.extend(Header.prototype,{
     loadRegisterModal:function(){
         new RegisterModal()
     },
+  //添加事件监听
     addListener : function () {
+      //点击退出
       $(".logout_link").on("click",this.handleLogout);
-      $(".reg_btn_reset").on("click",this.resetForm)
+      //点击注册
+      $(".reg_btn_reset").on("click",this.resetForm);
+      //点击登录清空模态框
+      $(".btn_login_modal").on("click",function(){
+        $(".login_form").get(0).reset();
+      });
     },
     handleLogout:function(){
       $.get("/api/users/logout",function(){
@@ -58,6 +65,7 @@ $.extend(Header.prototype,{
       $(".reg_form").get(0).reset();
       $("#regModal .clear").addClass("hide");
     },
+    //检测用户是否已经登录
     checkLogin:function(){
       $.get("/api/users/check",function(data){
         if(data.res_code === 0){
@@ -66,9 +74,11 @@ $.extend(Header.prototype,{
         }
       },"json");
     },
+    //职位管理页面
     positionCenter:function(){
       $(".pos_center").on("click",this.checkLog);
     },
+    //跳转到职位管理或者登录模态框
     checkLog:function(){
       $.get("/api/users/check",function(data){
         if(data.res_code ===0){

@@ -29,7 +29,7 @@ $.extend(Position.prototype,{
 	addListener : function () {
 		const  that = this;
 		//点击添加弹出添加模态框
-		$(".btn_add_pos").on("click", this.handleAddPosition);
+		$(".btn_add_pos").on("click", $.proxy(this.handleAddPosition, this));
 		//点击页数实现翻页
 		$(".pagination").on("click","li",function () {
 			const currentPage = $(this).find("a").text();
@@ -42,6 +42,8 @@ $.extend(Position.prototype,{
 			$(".modModal").modal();
 			that.modModalList($(this).data("id"));
 		});
+		//点击关闭按钮清空模态框的数据
+		$("#addModal").on("click",".close_add,.btn_close_add",$.proxy(this.clearForm,this));
 
 		//点击修改模态框中的提交按钮 修改数据
 		$(".submit_list").on("click",that.ModifyPosition);
@@ -54,17 +56,15 @@ $.extend(Position.prototype,{
 		//点击确认模态框的确认按钮删除数据
 		$(".confirm").on("click",function(){
 			let id = $(this).data("id"),
-				doms = $(".del_pos_list");
+				doms = $(".del_pos_list"),
+				page = $(".pagination .active a").text();
 				$.get("/api/positions/delete",{id:id},(data)=>{
 					if(data.res_code === 0){
 						$("#delModal").modal("hide");
 						for (let i = 0; i < doms.length; i++){
 							if(id === $(doms).eq(i).data("id")){
-								// let src = $(doms).eq(i).parents("tr").find("img").attr("src");
-								// let filename = "E:\\课程\\课后练习\\project\\public\\upload\\" + src; 
-									that.deleteFile(filename);
 								$(doms).eq(i).parents("tr").remove();
-
+								that.loadListPosition(page);
 								return;
 							}
 						}
@@ -82,9 +82,13 @@ $.extend(Position.prototype,{
 			processData : false,
 			contentType:false,
 			dataType:"json",
-			success :function(data){
+			success :(data)=>{
 				if(data.res_code ===0){
+					//隐藏修改模态框
 					$("#addModal").modal("hide");
+					let page = $(".pagination .active a").text();
+					this.loadListPosition(page);
+					this.clearForm();
 				}else{
 					$(".add_pos_error").removeClass("hide");
 				}
@@ -118,6 +122,7 @@ $.extend(Position.prototype,{
 	},
 	//修改模态框实现的功能   根据_id把内容加载到模态框里面
 	modModalList : function(id){
+			$("#modexampleInputFile").val("");
 		$.get("/api/positions/findid",{id:id},function(data){
 			if(data.res_code ===0){
 				let list = data.res_body[0];
@@ -143,29 +148,22 @@ $.extend(Position.prototype,{
 			processData : false,
 			contentType:false,
 			dataType:"json",
-			success :function(data){
+			success :(data)=>{
 				if(data.res_code ===0){
 					$("#modModal").modal("hide");
 					let page = $(".pagination .active").text();
-					Position.prototype.loadListPosition(page);
+					this.loadListPosition(page);
+					this.clearForm();
 				}else{
 					$(".mod_pos_error").removeClass("hide");
 				}
 			}
 		});
+	},
+	//添加模态框初始化
+	clearForm:function(){
+		$(".add_pos_form").get(0).reset();
+		$(".mon_position").get(0).reset();
 	}
-
-
-	// 处理添加职位的方法
-	// handleAddPosition : function() {
-	// 	$.post("/api/positions/add", $(".add_pos_form").serialize(), function(data){
-			
-	// 		if (data.res_code === 0) { // 成功
-	// 			$("#addModal").modal("hide");
-	// 		} else { // 失败
-	// 			$(".add_pos_error").removeClass("hide");
-	// 		}
-	// 	}, "json");
-	// }
 });
 new Position();

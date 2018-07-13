@@ -37,7 +37,6 @@ const PositionModel = {
         Position.find().count().then(success,error);
     },
     findid:function(id,success,error){
-        console.log(id)
         Position.find({_id:ObjectId(id)}).then(success,error);
     },
     modify:function(list,success,error){

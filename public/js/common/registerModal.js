@@ -43,6 +43,7 @@ RegisterModal.template=`<div class="modal fade" id="regModal" tabindex="-1" role
                     </div>
                 </div>`;
 $.extend(RegisterModal.prototype,{
+    //把模态框添加到body中
     loadRegisterModal:function(){
         $(RegisterModal.template).appendTo('body');
     },
@@ -54,30 +55,35 @@ $.extend(RegisterModal.prototype,{
       $("#regAgainPassword").on("blur",$.proxy(this.repeatPassword,RegisterModal));
       $("#regemil").on("blur",$.proxy(this.emailCheck,this));
   },
+  //验证用户名是否存在
   checkUsername:function(){
     let reg = /^[a-zA-Z][a-zA-Z]{5,16}$/,
         username = $("#regUsername").val();
     if(reg.test(username)){
       $.get("/api/users/checkUsername",{username:username},(data)=>{
         if(data.res_body.length === 0){
+          //用户名可以注册
             $(".user_danger").addClass("hide");
-            $(".user_success").removeClass("hide");
-            return true;
+            $(".user_success").removeClass("hide").text("用户名可用！");
         }else{
+          //用户名已被注册
           $(".user_success").addClass("hide");
           $(".user_danger").removeClass("hide").text("用户名已被注册！");
         }
       });
     }else{
+        //用户名的格式错误
       $(".user_success").addClass("hide");
       $(".user_danger").removeClass("hide").text("用户名格式有误！");
     }
     if(username == ""){
+      //用户名不能为空
       $(".user_success").addClass("hide");
       $(".user_danger").removeClass("hide").text("用户名不能为空！");
     }
     $(".add_pos_error").addClass("hide");
   },
+  //验证密码的格式是否正确
   checkPassword:function(){
     let reg = /^[a-zA-Z0-9]{6,12}$/,
         password = $("#regPassword").val(),
@@ -86,7 +92,6 @@ $.extend(RegisterModal.prototype,{
         $(".pwd_danger").removeClass("hide");
     }else{
       $(".pwd_danger").addClass("hide");
-      return true;
     }
     if(password === reapassword)
     $(".pwd_repeat_danger").addClass("hide");
@@ -94,6 +99,7 @@ $.extend(RegisterModal.prototype,{
     $(".pwd_repeat_danger").removeClass("hide").text("密码必须和上面一致！");
     $(".add_pos_error").addClass("hide");
   },
+  //验证密码是否与重复的密码一致
   repeatPassword:function () {
     let password = $("#regPassword").val();
         reapassword = $("#regAgainPassword").val();
@@ -103,10 +109,10 @@ $.extend(RegisterModal.prototype,{
     $(".pwd_repeat_danger").removeClass("hide").text("密码不能为空！");
     else{
       $(".pwd_repeat_danger").addClass("hide");
-      return true;
     }
     $(".add_pos_error").addClass("hide");
   },
+  //验证邮箱的格式是否正确
   emailCheck:function(){
     let email = $("#regemil").val(),
         reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
@@ -114,12 +120,12 @@ $.extend(RegisterModal.prototype,{
         $(".email_danger").removeClass("hide").text("邮箱格式有误！");
       }else {
         $(".email_danger").addClass("hide");
-        return true;
       }
       if(email === "")
       $(".email_danger").removeClass("hide").text("邮箱不能为空！");
       $(".add_pos_error").addClass("hide");
   },
+  //实现注册功能
   registerUser:function(){
     let regusername = /^[a-zA-Z][a-zA-Z]{5,16}$/,
         username = $("#regUsername").val(),

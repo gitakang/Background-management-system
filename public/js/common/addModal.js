@@ -5,7 +5,7 @@ AddModal.template = `<div class="modal fade" id="addModal">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                <button type="button" class="close close_add" data-dismiss="modal"><span>&times;</span></button>
                                 <h4 class="modal-title">职位信息</h4>
                               </div>
                               <div class="modal-body">
@@ -41,7 +41,7 @@ AddModal.template = `<div class="modal fade" id="addModal">
                                   </form>
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-default btn_close_add" data-dismiss="modal">关闭</button>
                                 <button type="button" class="btn btn-primary btn_add_pos">提交</button>
                               </div>
                             </div>

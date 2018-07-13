@@ -1,5 +1,4 @@
 const PositionModel = require("../models/PositionModel");
-
 const PositionController = {
 	// 添加职位信息
 	add : function(req, res, next) {
@@ -99,6 +98,7 @@ const PositionController = {
 	},
 	delete:function(req,res,next){
 		const {id} = req.query;
+
 		PositionModel.delete(id,(data)=>{
 			res.json({
 				res_code:0,
