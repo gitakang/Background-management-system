@@ -1,4 +1,5 @@
 const PositionModel = require("../models/PositionModel");
+const fs = require("fs");
 const PositionController = {
 	// 添加职位信息
 	add : function(req, res, next) {
@@ -97,8 +98,14 @@ const PositionController = {
 		});
 	},
 	delete:function(req,res,next){
-		const {id} = req.query;
-
+		let {logoname,id} = req.query;
+		let filepath = "../project/public" + logoname;
+		fs.unlink(filepath, function(err){
+		if(err){
+		throw err;
+		}
+		console.log('文件:'+filepath+'删除成功！');
+		});
 		PositionModel.delete(id,(data)=>{
 			res.json({
 				res_code:0,

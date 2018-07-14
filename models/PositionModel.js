@@ -52,7 +52,6 @@ const PositionModel = {
                        {upsert:true}).then(success,error);
     },
     delete:function(id,success,error){
-        console.log(id)
         Position.remove({_id:ObjectId(id)}).then(success,error);
     }
 }

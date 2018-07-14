@@ -19,6 +19,6 @@ router.get("/list" ,PositionController.list);
 router.get("/all" ,PositionController.all);
 router.get("/findid" ,PositionController.findid);
 router.post("/modify", upload.single("logoname") ,PositionController.modify);
-router.get("/delete" ,PositionController.delete);
+router.get("/delete",PositionController.delete);
 
 module.exports = router;

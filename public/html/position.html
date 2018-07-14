@@ -57,7 +57,7 @@
                 <td>{{prod.address}}</td>
                 <td>{{prod.money}}</td>
                 <td><a href="#" data-toggle="modal" data-target="#modModal" class="mod_pos_list" data-id="{{prod._id}}">修改</a> 
-                    <a href="#" data-toggle="modal" data-target="#delModal" class="del_pos_list" data-id="{{prod._id}}">删除</a>
+                    <a href="#" data-toggle="modal" data-target="#delModal" class="del_pos_list" data-id="{{prod._id}}" data-src="{{prod.logoname}}">删除</a>
                 </td>
             </tr>
         {{/each}}
@@ -75,7 +75,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary confirm" data-id="">确认</button>
+                <button type="button" class="btn btn-primary confirm" data-img="" data-id="" >确认</button>
             </div>
             </div>
         </div>

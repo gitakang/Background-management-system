@@ -50,15 +50,18 @@ $.extend(Position.prototype,{
 
 		//点击删除弹出删除确认模态框
 		$(".pos_list").on("click",".del_pos_list",function(){
-			let id = $(this).data("id");
+			let id = $(this).data("id"),
+				src = $(this).data("src");
 				$(".confirm").data("id",id);
+				$(".confirm").data("src",src);
 		});
 		//点击确认模态框的确认按钮删除数据
 		$(".confirm").on("click",function(){
 			let id = $(this).data("id"),
+				logoname = $(this).data("src");
 				doms = $(".del_pos_list"),
 				page = $(".pagination .active a").text();
-				$.get("/api/positions/delete",{id:id},(data)=>{
+				$.get("/api/positions/delete",{id:id,logoname,logoname},(data)=>{
 					if(data.res_code === 0){
 						$("#delModal").modal("hide");
 						for (let i = 0; i < doms.length; i++){
