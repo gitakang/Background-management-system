@@ -40,16 +40,14 @@ const PositionModel = {
         Position.find({_id:ObjectId(id)}).then(success,error);
     },
     modify:function(list,success,error){
-       Position.update({_id:ObjectId(list.id)},
-                       {
-                        logoname:list.logoname, 
-                        positionname:list.positionname, 
-                        companyname:list.companyname,
-                        work:list.work,
-                        typeposition:list.typeposition,
-                        address:list.address,
-                        money:list.money},
-                       {upsert:true}).then(success,error);
+       Position.update({_id:ObjectId(list.id)},{logoname:list.logoname, 
+                                                positionname:list.positionname, 
+                                                companyname:list.companyname,
+                                                work:list.work,
+                                                typeposition:list.typeposition,
+                                                address:list.address,
+                                                money:list.money},
+                                                {upsert:true}).then(success,error);
     },
     delete:function(id,success,error){
         Position.remove({_id:ObjectId(id)}).then(success,error);
